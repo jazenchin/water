@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.lhr.water.R
@@ -44,9 +44,9 @@ class GoodsDialog(
             var formItemFieldContentList = ArrayList<String>()
             for (i in 0 until binding.linearData.childCount) {
                 val linearLayoutItem = binding.linearData.getChildAt(i)
-                val editText = linearLayoutItem.findViewById<EditText>(R.id.textDataContent)
-                val editTextValue = editText.text.toString()
-                formItemFieldContentList.add(editTextValue)
+                val textView = linearLayoutItem.findViewById<TextView>(R.id.textDataContent)
+                val textViewValue = textView.text.toString()
+                formItemFieldContentList.add(textViewValue)
             }
             if (isAdd) {
                 listener.onGoodsDialogConfirm(listToJsonObject(formItemFieldNameEngList, formItemFieldContentList))
