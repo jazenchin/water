@@ -39,7 +39,7 @@ object FormField {
     private val transferFormField = arrayOf("id", "dealStatus", "reportId", "reportTitle", "date", "transferringTransferNumber", "ReceivingApplyTransferNumber", "receivingTransferNumber", "transferringDept", "originalVoucherNumber", "requiredDate", "transferringTransferDate", "receivingTransferDate", "receivingApplyTransferDate", "receivingDept", "receivingLocation", "contact", "contactPhone", "transferDescription")
     private val transferMaterialField = arrayOf("number", "materialNumber", "materialName", "materialSpec", "materialUnit", "approvedQuantity", "applyNumber", "allocatedQuantity", "receivedQuantity")
     // 材料退料單欄位
-    private val returningFormField = arrayOf("id", "dealStatus", "reportId", "reportTitle", "date", "receiptDept", "formNumber", "leadDept", "returnReceiptNumber", "receivedDate", "accountingSubject", "costAllocationUnit", "returnDept", "systemCode", "usageCode", "projectNumber", "projectName", "originalVoucherNumber")
+    private val returningFormField = arrayOf("id", "dealStatus", "reportId", "reportTitle", "date", "receiptDept", "leadNumber", "leadDept", "formNumber", "receivedDate", "accountingSubject", "costAllocationUnit", "returnDept", "systemCode", "usageCode", "projectNumber", "projectName", "originalVoucherNumber")
     private val returningMaterialField = arrayOf("number", "materialNumber", "materialName", "materialSpec", "materialUnit", "returnedQuantity", "receivedQuantity", "stockingPrice")
 
     private const val deliveryFormName = "交貨通知單"
