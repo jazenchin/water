@@ -420,6 +420,7 @@
 
     <!--  調撥單  -->
     <string-array name="transfer_form_field_name">
+        <item>編號</item>
         <item>處理狀態</item>
         <item>報表代號</item>
         <item>報表名稱</item>
@@ -441,7 +442,6 @@
     </string-array>
 
     <string-array name="transfer_form_field_name_eng">
-        <item>編號</item>
         <item>id</item>
         <item>dealStatus</item>
         <item>reportId</item>
