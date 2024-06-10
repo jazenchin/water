@@ -47,6 +47,7 @@ class MapViewModel(context: Context, var regionRepository: RegionRepository, var
                 quantity = checkoutEntity.quantity.toString(),
                 recordDate = checkoutEntity.inputTime,
                 storageArrivalId = "",
+                itemId = 0,
             )
         }.toMutableList() as ArrayList<StorageRecordEntity>
 
@@ -104,16 +105,17 @@ class MapViewModel(context: Context, var regionRepository: RegionRepository, var
             // 如果 totalQuantity 不等於 0，則將該項加入 resultStorageRecordEntities
             if (totalQuantity != 0) {
                 resultStorageRecordEntities.add(StorageRecordEntity(
-                    storageId = 0, 
+                    storageId = 0,
                     formType = "0",
-                    formNumber = "", 
+                    formNumber = "",
                     materialName = materialName,
                     materialNumber = materialNumber,
                     materialStatus = "2",
-                    userId = "", 
+                    userId = "",
                     quantity = totalQuantity.toString(),
                     recordDate = inputTime,
-                    storageArrivalId = ""
+                    storageArrivalId = "",
+                    itemId = 0
                 ))
             }
         }
@@ -122,16 +124,17 @@ class MapViewModel(context: Context, var regionRepository: RegionRepository, var
         processedInvtStat1Records.forEach { (key, quantity) ->
             val (materialName, materialNumber, inputTime) = key
             resultStorageRecordEntities.add(StorageRecordEntity(
-                storageId = 0, 
+                storageId = 0,
                 formType = "0",
-                formNumber = "", 
+                formNumber = "",
                 materialName = materialName,
                 materialNumber = materialNumber,
                 materialStatus = "1",
-                userId = "", 
+                userId = "",
                 quantity = quantity.toString(),
                 recordDate = inputTime,
-                storageArrivalId = ""
+                storageArrivalId = "",
+                itemId = 0
             ))
         }
 

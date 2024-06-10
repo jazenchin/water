@@ -6,8 +6,8 @@ import com.lhr.water.network.data.response.UserInfo
 class UserRepository private constructor(private val context: Context) {
 
     var userInfo = UserInfo(
-        deptAno = "0D60",
-        userId = "123"
+        deptAno = "03",
+        userId = "110838"
     )
 //    var userInfo = UserInfo(
 //        deptAno = "",
