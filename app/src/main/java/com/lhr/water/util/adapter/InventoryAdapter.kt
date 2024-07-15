@@ -60,14 +60,14 @@ class InventoryAdapter(val listener: Listener, context: Context) :
                 binding.imageOk.visibility = View.VISIBLE
                 binding.textQuantity.isEnabled = true
                 binding.textQuantity.isEnabled = true
-                binding.textQuantity.setBackgroundColor(Color.LTGRAY)
+                binding.textQuantity.setBackgroundColor(Color.TRANSPARENT)
             }
 
             binding.imageOk.setOnClickListener {
                 binding.imageEdit.visibility = View.VISIBLE
                 binding.imageOk.visibility = View.GONE
                 binding.textQuantity.isEnabled = false
-                binding.textQuantity.setBackgroundColor(Color.TRANSPARENT)
+                binding.textQuantity.setBackgroundColor(Color.LTGRAY)
                 inventoryEntity.actualQuantity = binding.textQuantity.text.toString()
                 inventoryEntity.dealStatus = "處理完成"
                 inventoryEntity.isUpdate = false
