@@ -36,10 +36,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         initView()
         bindViewModel()
 
-        viewModel.userRepository.userInfo.postValue(UserInfo(
-            deptAno = "",
-            userId = ""
-        ))
+        // viewModel.userRepository.userInfo.postValue(UserInfo(
+        //     deptAno = "",
+        //     userId = ""
+        // ))
 
         // viewModel.getUserInfo().subscribe({ _ ->
         //     viewModel.getDataList()
