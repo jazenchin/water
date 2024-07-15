@@ -41,14 +41,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             userId = ""
         ))
 
-        viewModel.getUserInfo().subscribe({ _ ->
-            viewModel.getDataList()
-        }, { error ->
-            viewModel.userRepository.userInfo.postValue(UserInfo(
-                deptAno = "",
-                userId = ""
-            ))
-        })
+        // viewModel.getUserInfo().subscribe({ _ ->
+        //     viewModel.getDataList()
+        // }, { error ->
+        //     viewModel.userRepository.userInfo.postValue(UserInfo(
+        //         deptAno = "",
+        //         userId = ""
+        //     ))
+        // })
 
         val receivedIntent = intent
         if (receivedIntent.action == Intent.ACTION_SEND) {
