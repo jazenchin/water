@@ -51,11 +51,11 @@ class DeepLinkViewModel(
     var sqlDatabase = SqlDatabase.getInstance()
 
     fun autoDownload() {
-        updatePda()
+        updatePda(userRepository.userInfo.value!!)
     }
 
-    fun updatePda() {
-        ApiManager().getDataList(userRepository.userInfo.value!!)
+    fun updatePda(response: UserInfo) {
+        ApiManager().getDataList(response)
             .subscribeOn(Schedulers.io())
             .map { response ->
 
@@ -141,7 +141,7 @@ class DeepLinkViewModel(
                     println(response.toString())
                     getUserInfo().subscribe({ response ->
                         println("請求成功")
-
+                        
                         // 更新 Form 表中的 isUpdate 為 true
                         formEntities.forEach { formEntity ->
                             formEntity.isUpdate = true
@@ -160,7 +160,7 @@ class DeepLinkViewModel(
                             sqlDatabase.getInventoryDao().update(inventoryEntity)
                         }
 
-                        updatePda()
+                        updatePda(response)
                     }, { error ->
                         println("請求失敗：${error.message}")
                     })
