@@ -59,7 +59,6 @@ class InventoryAdapter(val listener: Listener, context: Context) :
                 binding.imageEdit.visibility = View.GONE
                 binding.imageOk.visibility = View.VISIBLE
                 binding.textQuantity.isEnabled = true
-                binding.textQuantity.isEnabled = true
                 binding.textQuantity.setBackgroundColor(Color.TRANSPARENT)
             }
 

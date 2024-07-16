@@ -48,7 +48,7 @@
             android:textColor="@color/primaryBlack"
             android:gravity="center"
             android:inputType="number"
-            android:enabled="false" />
+            android:enabled="true" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
