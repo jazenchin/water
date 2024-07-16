@@ -10,6 +10,7 @@ import java.io.Serializable
 
 @Entity(tableName = SqlModel.INVENTORY_TABLE_NAME, indices = [Index(value = [SqlModel.formNumber], unique = true)])
 class InventoryEntity(
+
     formId: Int,
     formNumber: String,
     dealStatus: String,
