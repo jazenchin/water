@@ -45,7 +45,13 @@ class FormAdapter(val listener: Listener, context: Context) :
         fun bind(formEntity: FormEntity) {
             binding.textReportTitle.text = formEntity.reportTitle
             binding.textFormNumber.text = formEntity.formNumber
-            binding.textDate.text = formEntity.date
+            binding.textDate.text = formEntity.date?.let {
+                if (it.length >= 10) {
+                    it.substring(0, 10)
+                } else {
+                    "date error"
+                }
+            }
             when (formEntity.dealStatus) {
                 context.getString(R.string.wait_deal) -> {
                     binding.imageStatus.setImageDrawable(context.getDrawable(R.drawable.red_light))
@@ -67,7 +73,9 @@ class FormAdapter(val listener: Listener, context: Context) :
                 listener.onDealMaterialClick(getItem(adapterPosition))
             }
             binding.root.setOnClickListener {
-                listener.onItemClick(getItem(adapterPosition))
+                if(adapterPosition != -1){
+                    listener.onItemClick(getItem(adapterPosition))
+                }
             }
         }
     }
