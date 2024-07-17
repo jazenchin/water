@@ -132,7 +132,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -161,6 +162,42 @@
             style="@style/TextStyle_16dp_black"
             android:textColor="@color/white"
             android:text="@string/login"/>
+
+        <TextView
+            android:id="@+id/textAutoDownloadTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="觸發auto-download"
+            style="@style/TextStyle_16dp_black"
+            android:textColor="@color/primaryBlue"
+            app:layout_constraintLeft_toLeftOf="@+id/buttonLogin"
+            app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/textAutoUploadTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="觸發auto-upload"
+            style="@style/TextStyle_16dp_black"
+            android:textColor="@color/primaryBlue"
+            app:layout_constraintLeft_toLeftOf="@+id/textAutoDownloadTest"
+            app:layout_constraintTop_toBottomOf="@+id/textAutoDownloadTest"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/textGetUserInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="觸發GetUserInfo"
+            style="@style/TextStyle_16dp_black"
+            android:textColor="@color/primaryBlue"
+            app:layout_constraintLeft_toLeftOf="@+id/textAutoUploadTest"
+            app:layout_constraintTop_toBottomOf="@+id/textAutoUploadTest"
+            android:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
