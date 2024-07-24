@@ -79,22 +79,22 @@ class WaitDealMaterialAdapter(
             }
 
             binding.textQuantity.text = quantity.toString()
-            // if (quantity == 0) {
-                // binding.cover.visibility = View.VISIBLE
-            // } else {
+            if (quantity == 0) {
+                binding.cover.visibility = View.VISIBLE
+            } else {
                 binding.cover.visibility = View.INVISIBLE
-            // }
+            }
 
             binding.root.setOnClickListener {
 
-                // if (quantity == 0) {
-                //     showToast(context, "已經無貨物")
-                // } else {
+                if (quantity == 0) {
+                    showToast(context, "已經無貨物")
+                } else {
                     listener.onItemClick(
                         getItem(adapterPosition),
                         binding.textQuantity.text.toString()
                     )
-                // }
+                }
             }
         }
     }
