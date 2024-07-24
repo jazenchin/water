@@ -3,7 +3,6 @@ package com.lhr.water.ui.formContent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import com.google.gson.Gson
@@ -13,8 +12,6 @@ import com.lhr.water.data.deliveryItemFieldMap
 import com.lhr.water.data.form.BaseForm
 import com.lhr.water.data.form.BaseItem
 import com.lhr.water.data.form.DeliveryForm
-import com.lhr.water.data.form.ReceiveForm
-import com.lhr.water.data.form.ReturnForm
 import com.lhr.water.data.form.TransferForm
 import com.lhr.water.data.receiveFieldMap
 import com.lhr.water.data.receiveItemFieldMap
@@ -34,7 +31,6 @@ import com.lhr.water.util.isCreateRNumberList
 import com.lhr.water.util.showToast
 import com.lhr.water.util.widget.MaterialWidget
 import com.lhr.water.util.widget.FormContentDataWidget
-import kotlin.reflect.KClass
 
 class FormContentActivity : BaseActivity(), View.OnClickListener {
     val viewModel: FormContentViewModel by viewModels { (applicationContext as APP).appContainer.viewModelFactory }
@@ -56,10 +52,11 @@ class FormContentActivity : BaseActivity(), View.OnClickListener {
         formEntity = intent.getSerializableExtra("formEntity") as FormEntity
         baseForm = formEntity.parseBaseForm()
 
-        currentDealStatus = formEntity.isCreateRNumber
+        currentDealStatus = formEntity.dealStatus
+        currentIsCreateRNumber = formEntity.isCreateRNumber
 
 
-        // 如果表單是待處理則提前確認是否有入庫完成，若有則自動把狀態改為處理完成
+        // 如果表單是處理中則提前確認是否有入庫完成，若有則自動把狀態改為處理完成
         if (currentDealStatus == getString(R.string.now_deal)
         ) {
             if (isMaterialAlreadyInput(
@@ -67,7 +64,6 @@ class FormContentActivity : BaseActivity(), View.OnClickListener {
                     baseForm.formNumber,
                 )
             ) {
-                formEntity.dealStatus = getString(R.string.complete_deal)
                 currentDealStatus = getString(R.string.complete_deal)
             }
         }
@@ -164,7 +160,7 @@ class FormContentActivity : BaseActivity(), View.OnClickListener {
                         isCreateRNumberList
                     )
                     binding.spinnerIsCreateRNumber.adapter = adapter
-                    binding.spinnerIsCreateRNumber.setSelection(currentDealStatus.toInt())
+                    binding.spinnerIsCreateRNumber.setSelection(currentIsCreateRNumber.toInt())
                     binding.spinnerIsCreateRNumber.onItemSelectedListener =
                         object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
@@ -174,7 +170,7 @@ class FormContentActivity : BaseActivity(), View.OnClickListener {
                                 id: Long
                             ) {
                                 // 當選項被選擇時，將選項的值存儲到content
-                                currentDealStatus = position.toString()
+                                currentIsCreateRNumber = position.toString()
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -188,7 +184,7 @@ class FormContentActivity : BaseActivity(), View.OnClickListener {
         // --------------材料--------------------
 
         baseForm.itemDetails.forEachIndexed { index, itemDetail ->
-            val formGoodsDataWidget =
+            val formMaterialDataWidget =
                 MaterialWidget(
                     activity = this@FormContentActivity,
                     baseForm = baseForm,
@@ -200,7 +196,7 @@ class FormContentActivity : BaseActivity(), View.OnClickListener {
                     },
                     dealStatus = formEntity.dealStatus
                 )
-            binding.linearItemData.addView(formGoodsDataWidget)
+            binding.linearItemData.addView(formMaterialDataWidget)
         }
     }
 

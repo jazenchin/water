@@ -14,6 +14,7 @@ import com.lhr.water.data.returningFieldMap
 import com.lhr.water.databinding.FragmentInventoryBinding
 import com.lhr.water.repository.FormRepository
 import com.lhr.water.room.InventoryEntity
+import com.lhr.water.room.SqlDatabase
 import com.lhr.water.ui.base.BaseFragment
 import com.lhr.water.util.SharedPreferencesHelper
 import com.lhr.water.util.adapter.InventoryAdapter
@@ -21,7 +22,7 @@ import org.json.JSONException
 import timber.log.Timber
 
 
-class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter.Listener {
+class InventoryFragment : BaseFragment(), View.OnClickListener {
 
     private var _binding: FragmentInventoryBinding? = null
     private val binding get() = _binding!!
@@ -63,7 +64,6 @@ class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter
             inventoryAdapter.submitList(viewModel.filterRecord(formRepository.inventoryEntities.value!!, searchMaterialName))
         }
 
-        // 盤點表單代號輸入後篩選更新
         viewModel.formRepository.isInventoryCompleted.observe(viewLifecycleOwner) {isInventoryCompleted ->
             binding.checkbox.isChecked = isInventoryCompleted
         }
@@ -94,35 +94,20 @@ class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             viewModel.formRepository.isInventoryCompleted.postValue(isChecked)
             SharedPreferencesHelper.saveInventoryCompleted(requireContext(), isChecked)
+            SqlDatabase.getInstance().getInventoryDao().updateAllStatus(isUpdate = false, dealStatus = if (isChecked) "處理完成" else "待處理")
         }
 
         binding.widgetTitleBar.imageBackup.setOnClickListener(this)
     }
 
     private fun initRecyclerView() {
-        inventoryAdapter = InventoryAdapter(this, requireContext())
+        inventoryAdapter = InventoryAdapter(requireContext())
         binding.recyclerInventory.adapter = inventoryAdapter
         binding.recyclerInventory.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-        }
-    }
-
-    /**
-     * 表單列表點擊
-     * @param json 被點擊的列資料
-     */
-    override fun onItemClick(inventoryEntity: InventoryEntity) {
-        val extractedValues = ArrayList<String>()
-        for (fieldName in formFieldNameEngList) {
-            try {
-//                val value: String = json.getString(fieldName)
-//                extractedValues.add(value)
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
         }
     }
 

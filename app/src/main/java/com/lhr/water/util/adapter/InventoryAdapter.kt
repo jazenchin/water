@@ -6,6 +6,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,7 @@ import com.lhr.water.databinding.ItemInventoryMaterialBinding
 import com.lhr.water.room.InventoryEntity
 import com.lhr.water.room.SqlDatabase
 
-class InventoryAdapter(val listener: Listener, context: Context) :
+class InventoryAdapter(context: Context) :
     ListAdapter<InventoryEntity, InventoryAdapter.ViewHolder>(LOCK_DIFF_UTIL) {
     var context = context
 
@@ -51,32 +52,27 @@ class InventoryAdapter(val listener: Listener, context: Context) :
             binding.editQuantity.text = Editable.Factory.getInstance().newEditable(inventoryEntity.actualQuantity.toString())
             binding.textDefaultQuantity.text = Editable.Factory.getInstance().newEditable(inventoryEntity.defaultQuantity.toString())
 
-
-            binding.root.setOnClickListener {
-                listener.onItemClick(getItem(adapterPosition))
-            }
-
             binding.imageEdit.setOnClickListener {
                 binding.imageEdit.visibility = View.GONE
                 binding.imageOk.visibility = View.VISIBLE
                 binding.editQuantity.isEnabled = true
-                binding.editQuantity.setBackgroundColor(Color.LTGRAY)
+                binding.line.visibility = View.VISIBLE
+
+                binding.editQuantity.requestFocus()
+                binding.editQuantity.setSelection(binding.editQuantity.text.length)
+                val imm = binding.editQuantity.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.editQuantity, InputMethodManager.SHOW_IMPLICIT)
             }
 
             binding.imageOk.setOnClickListener {
                 binding.imageEdit.visibility = View.VISIBLE
                 binding.imageOk.visibility = View.GONE
                 binding.editQuantity.isEnabled = false
-                binding.editQuantity.setBackgroundColor(Color.TRANSPARENT)
+                binding.line.visibility = View.GONE
                 inventoryEntity.actualQuantity = binding.editQuantity.text.toString()
-                inventoryEntity.dealStatus = "處理完成"
                 inventoryEntity.isUpdate = false
                 SqlDatabase.getInstance().getInventoryDao().insertOrUpdate(inventoryEntity)
             }
         }
-    }
-
-    interface Listener {
-        fun onItemClick(InventoryEntity: InventoryEntity)
     }
 }

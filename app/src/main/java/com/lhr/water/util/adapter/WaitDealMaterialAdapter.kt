@@ -79,7 +79,7 @@ class WaitDealMaterialAdapter(
             }
 
             binding.textQuantity.text = quantity.toString()
-            if (quantity == 0) {
+            if (quantity <= 0) {
                 binding.cover.visibility = View.VISIBLE
             } else {
                 binding.cover.visibility = View.INVISIBLE
@@ -87,7 +87,7 @@ class WaitDealMaterialAdapter(
 
             binding.root.setOnClickListener {
 
-                if (quantity == 0) {
+                if (quantity <= 0) {
                     showToast(context, "已經無貨物")
                 } else {
                     listener.onItemClick(
