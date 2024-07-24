@@ -24,6 +24,7 @@ class ApiManager() {
 
     val retrofit = Retrofit.Builder()
         .baseUrl("http://localhost:8081/")
+//        .baseUrl("http://192.168.11.34:8081/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create()) // help turns Call to Observable

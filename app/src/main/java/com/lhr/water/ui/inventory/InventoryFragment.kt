@@ -15,15 +15,13 @@ import com.lhr.water.databinding.FragmentInventoryBinding
 import com.lhr.water.repository.FormRepository
 import com.lhr.water.room.InventoryEntity
 import com.lhr.water.ui.base.BaseFragment
+import com.lhr.water.util.SharedPreferencesHelper
 import com.lhr.water.util.adapter.InventoryAdapter
-import com.lhr.water.util.dialog.InventoryGoodsDialog
-import com.lhr.water.util.widget.MaterialWidget
 import org.json.JSONException
-import org.json.JSONObject
 import timber.log.Timber
 
 
-class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter.Listener, InventoryGoodsDialog.Listener {
+class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter.Listener {
 
     private var _binding: FragmentInventoryBinding? = null
     private val binding get() = _binding!!
@@ -64,6 +62,11 @@ class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter
         viewModel.searchMaterialName.observe(viewLifecycleOwner) {searchMaterialName ->
             inventoryAdapter.submitList(viewModel.filterRecord(formRepository.inventoryEntities.value!!, searchMaterialName))
         }
+
+        // 盤點表單代號輸入後篩選更新
+        viewModel.formRepository.isInventoryCompleted.observe(viewLifecycleOwner) {isInventoryCompleted ->
+            binding.checkbox.isChecked = isInventoryCompleted
+        }
     }
 
     private fun initView() {
@@ -87,6 +90,11 @@ class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter
                 viewModel.searchMaterialName.postValue(s.toString())
             }
         })
+
+        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.formRepository.isInventoryCompleted.postValue(isChecked)
+            SharedPreferencesHelper.saveInventoryCompleted(requireContext(), isChecked)
+        }
 
         binding.widgetTitleBar.imageBackup.setOnClickListener(this)
     }
@@ -116,8 +124,6 @@ class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter
                 e.printStackTrace()
             }
         }
-//        val inventoryGoodsDialog = InventoryGoodsDialog(formFieldNameList, formFieldNameEngList, this, formItemFieldContentList = extractedValues)
-//        inventoryGoodsDialog.show(requireActivity().supportFragmentManager, "GoodsDialog")
     }
 
     override fun onPause() {
@@ -132,15 +138,4 @@ class InventoryFragment : BaseFragment(), View.OnClickListener, InventoryAdapter
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-
-    override fun onChangeGoodsInfo(
-        formItemJson: JSONObject,
-        formGoodsDataWidget: MaterialWidget
-    ) {
-//        formGoodsDataWidget.binding.textMaterialName.text = formItemJson.getString("materialName")
-//        formGoodsDataWidget.binding.textMaterialNumber.text = formItemJson.getString("materialNumber")
-//        formGoodsDataWidget.binding.textMaterialSpec.text = formItemJson.getString("materialSpec")
-//        formGoodsDataWidget.binding.textMaterialUnit.text = formItemJson.getString("materialUnit")
-//        formGoodsDataWidget.itemDetail = formItemJson
-    }
 }
